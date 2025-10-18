@@ -28,4 +28,4 @@ finally:
 </figure>
 </details>
 
-<a href=../slide05-examples/>» Next Slide</a>
+<a href=../05-examples/>» Next Slide</a>

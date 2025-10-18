@@ -31,4 +31,4 @@ OSError: [Errno 24] Too many open files: 'foo.txt'
 <p><img class=inline src=../mattparker-meme.png width=360></p>
 </details>
 
-<a href=../slide03-with/>» Next Slide</a>
+<a href=../03-with/>» Next Slide</a>

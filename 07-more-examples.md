@@ -57,4 +57,4 @@ print("parent: all done!")
 </figure>
 </details>
 
-<a href=../slide08-writing-context-managers/>» Next Slide</a>
+<a href=../08-writing-context-managers/>» Next Slide</a>

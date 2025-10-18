@@ -39,4 +39,4 @@ document.querySelector("#zoom").addEventListener("click", (e) => {
 
 (image source: <a href=https://www.weetechsolution.com/blog/best-word-cloud-generators target=_blank rel=noreferrer>7 Best Word Cloud Generators in 2025 (Free and Paid)</a>)
 
-<a href=../slide02-max-open-files/>» Next Slide</a>
+<a href=../02-max-open-files/>» Next Slide</a>

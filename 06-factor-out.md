@@ -36,4 +36,4 @@ try:</span>
 </figure>
 </details>
 
-<a href=../slide07-more-examples/>» Next Slide</a>
+<a href=../07-more-examples/>» Next Slide</a>

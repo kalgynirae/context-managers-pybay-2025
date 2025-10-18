@@ -47,4 +47,4 @@ finally:
 </figure>
 </details>
 
-<a href=../slide06-factor-out/>» Next Slide</a>
+<a href=../06-factor-out/>» Next Slide</a>

@@ -37,4 +37,4 @@ for _ in range(10_000):
 </details>
 </details>
 
-<a href=../slide04-what-are-context-managers/>» Next Slide</a>
+<a href=../04-what-are-context-managers/>» Next Slide</a>
