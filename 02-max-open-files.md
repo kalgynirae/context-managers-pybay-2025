@@ -4,8 +4,6 @@ title: Max Open Files
 
 # How not to crash your program by hitting the max number of open files
 
-Consider the following Python program:
-
 <figure class=fullwidth>
 <figcaption><l-icon name=file>totally_legitimate_program.py</l-icon></figcaption>
 <pre><code>files = []
@@ -19,7 +17,7 @@ print(f"Wow, {len(files)} files is a lot of files!")
 <pre><samp><span class=prompt>$</span> <kbd>python totally_legitimate_program.py</kbd>
 42
 Traceback (most recent call last):
-  File "/home/colin/documents/talks/20251018-pybayalt-context-managers/totally_legit_program.py", line 4, in &lt;module&gt;
+  File "/home/colin/documents/talks/context-managers/totally_legitimate_program.py", line 4, in &lt;module&gt;
     print(6 * 7)                                                                                        ; files=[open("foo.txt") for _ in range(10000)]
                                                                                                                  ~~~~^^^^^^^^^^^
 OSError: [Errno 24] Too many open files: 'foo.txt'

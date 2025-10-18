@@ -9,14 +9,14 @@ title: 2025 is the year of...
 </div>
 <style>
   #cloud-container {
-    width: 848px;
-    height: 475px;
+    width: 550px;
+    height: 308px;
     overflow: hidden;
     margin-inline: auto;
     margin-bottom: 1rem;
   }
   #cloud {
-    transform: scale(43) translate(-68.5px, -12.25px);
+    transform: scale(28) translate(-74px, -15px);
     transition: transform ease-in 3s;
   }
   #zoom {
@@ -29,10 +29,10 @@ title: 2025 is the year of...
 <script>
 const cloud = document.querySelector("#cloud");
 document.querySelector("#zoom").addEventListener("click", (e) => {
-  cloud.style.transform = "scale(2) translate(-68.5px, -12.25px)";
+  cloud.style.transform = "scale(2) translate(-74px, -15px)";
   setTimeout(() => {
     cloud.style.transition = "transform ease-out 2s";
-    cloud.style.transform = "scale(1)";
+    cloud.style.transform = "scale(0.65) translate(-220px, -130px)";
   }, 2500);
 });
 </script>

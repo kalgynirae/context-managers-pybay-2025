@@ -16,9 +16,9 @@ of us:
 [advance]
     "how not to crash your program by hitting the max number of open files"
 
-I don't know about you, but I run into this problem daily. For example, just
-yesterday I wrote this simple Python program [gesture], and when I ran it,
-[click to show output] Bam! Too many open files. So annoying!
+I don't know about you, but I run into this problem pretty much daily. For
+example, just yesterday I wrote this simple Python program [gesture], and when
+I ran it, [click to show output] Bam! Too many open files. So annoying!
 
 So what should we do? The answer, of course, is to use context managers!
 [click to show meme]
@@ -60,9 +60,10 @@ list, so they can't be garbage-collected.
 
 [forward again]
 
-This is why most people don't run into the open file limit in practice, even if
-they don't use `with`. As long as they don't *accidentally* keep references to
-their file objects, the garbage collector takes care of closing the files.
+Thanks to garbage collection, most people won't run into the open file limit in
+practice, even if they don't use `with`. As long as they don't *accidentally*
+keep references to their file objects, the garbage collector takes care of
+closing the files.
 
 Since we have garbage collection, why do we need `with` at all? Let's see what
 the slide says... [expand] Yes. But why? Oh... [expand] Dunno. You don't know??
@@ -80,7 +81,7 @@ confused right now because I hadn't even mentioned "context managers" until
 just now. And you're likely becoming even more confused as I speak because that
 last sentence was totally false -- I *did* mention context managers earlier, in
 fact they're in the title of the talk! -- and now you're wondering why I didn't
-edit that part out of my script... but maybe I just missed it. But then why
+edit that part out of my script... maybe I just missed it? But then why
 would I have added all of *these* sentences *into the script*? Some things...
 can never be understood.
 
@@ -90,13 +91,13 @@ So what are they? This is an easy question to answer for yourself. Just go to
 your web browser, type "docs.python.org/3/glossary.html" entirely from memory,
 Ctrl+F for "context manager", and you'll find this definition:
 
-"An object which implements the [context management protocol] and controls the
-environment seen in a `with` statement. See PEP 343."
+    An object which implements the *context management protocol* and controls
+    the environment seen in a `with` statement. See PEP 343.
 
-Context management protocol means the `__enter__` and `__exit__` methods. If
-an object implements those two methods, then, by definition, it is a context
-manager. That's still not a useful definition unless you understand when and
-how those methods are called.
+"Context management protocol" just means the `__enter__` and `__exit__`
+methods. If an object implements those two methods, then, by definition, it is
+a context manager. That's still not a helpful definition unless you understand
+when and how those methods are called.
 
 Let's follow this link to the documentation of the `with` statement. This is in
 the "Language Reference" section of the docs, so it's fairly technical. But I
@@ -106,18 +107,17 @@ understand if you just spend a little time with them.
 The part we're interested in is this description of how the `with` statement is
 executed. I'll summarize:
 
-First, the expression following the `with` keyword is evaluated, which
-produces an object. Next, that object's __enter__ *and*
-__exit__ methods are "loaded for later use" — this is done so that we know up
-front whether the object is really a context manager. If either of the methods
-is missing, an error will be thrown at this point. Next, the __enter__ method
-is invoked. If there was a *target* — that's the word after `as` — the return
-value is assigned to it. Next, the "suite" is executed — that's the
-indented block of code that we think of as "inside" the `with` block. Finally,
-the __exit__ method is invoked, possibly with exception information passed
-to it if an exception was thrown. Also, if the suite threw an exception,
-then the return value of the __exit__ method determines whether the exception
-is suppressed.
+First, the expression following the `with` keyword is evaluated, which produces
+an object. Next, that object's __enter__ and __exit__ methods are "loaded for
+later use" — I think this is done so that Python knows up front whether the
+object is really a context manager. If either of the methods is missing, an
+error will be thrown at this point. Next, the __enter__ method is invoked.
+If there was a *target* — that's the word after `as` — the return value is
+assigned to it. Next, the "suite" is executed — that's the indented block
+of code that we think of as "inside" the `with` block. Finally, the __exit__
+method is invoked, possibly with exception information passed to it if an
+exception was thrown. Also, if the suite threw an exception, then the return
+value of the __exit__ method determines whether the exception is suppressed.
 
 That was fairly technical, but it all boils down to this: the `with` statement
 lets you put a context manager *here* and some code *here*, and the context
@@ -138,7 +138,7 @@ this case, we don't want the text to go to stdout; instead we want to capture
 the text so we can email it to everybody who signs up for my "Low-Effort
 Python Tips" newsletter. So we temporarily replace `sys.stdout` with a StringIO
 object, but we make sure to do it responsibly, by saving the old value and
-restoring it when we're done.
+restoring it afterward.
 
     (code)
 
@@ -147,10 +147,11 @@ With a context manager, that can be rewritten like this.
     (shorter code)
 
 It's simpler, easier to read.  And note that this `redirect_stdout` context
-manager is in the standard library, in the `contextlib` module, which we'll be
-talking about more later.
+manager is already in the standard library, in the `contextlib` module, which
+we'll be talking about more later.
 
-Another example: Here we're acquiring a lock, doing some stuff, and releasing the lock.
+Another example: Here we're acquiring a lock, doing some stuff, and releasing
+the lock.
 
     (code)
 
@@ -162,20 +163,21 @@ And with a context manager:
 [advance]
 Earlier, I explained context managers as encapsulations of clean-up and
 tear-down operations, and that *is* how they're used most of the time. But I
-like to think about context managers in an even more general, cool-sounding way:
+like to think about context managers in an even more general, cool-sounding
+way:
 
-Context managers are like superordinate functions. Superfunctions?
+Context managers are like functions, but *twice as cool*.
 
-Let me explain! [expand] Functions are useful because they let you "factor out" a
-chunk of code, giving it a descriptive name and then using that name instead
-of copy-pasting the chunk of code all over the place. [indicate]
+Allow me to explain! [expand] Functions are useful because they let you "factor
+out" a chunk of code, giving it a descriptive name and then using that name
+instead of copy-pasting the chunk of code all over the place. [indicate]
 
 [expand]
 Context managers let you factor out *two* blocks of code, like this. [indicate]
 Twice as cool!
 
-Well... perhaps I'm over-selling it a little. The two blocks of code have to be
-related, and they have to conceptually *surround* some other code.
+Well... perhaps I am over-selling it a little. These two blocks of code do have
+to be related, and they have to conceptually *surround* some other code.
 
 Let's look again at that `redirect_stdout` example from before:
 
@@ -207,9 +209,10 @@ Context managers are useful for so many more things, like
 
     (code)
 
-This example is from a third-party async framework called Trio that I used
-once. It was pretty neat!
+This last example is from the documentation of a third-party async framework
+called Trio that I used once. It was pretty neat!
 
+[advance]
 So now that we've seen some of the ways they can be useful, let's talk about how
 to write our own context managers. There are two ways to go about it. The first
 is to define a class with __enter__ and __exit__ methods... but I'm not even
@@ -219,12 +222,12 @@ better*:
     (code)
 
 Simply import the `contextmanager` decorator from contextlib, and write a
-regular old function. Well, regular except that it uses `yield`, so it's
-actually a generator function. The contextmanager decorator is able to take this
-generator function and turn it into a real context manager! With __enter__ and
-__exit__ methods! The __enter__ method does everything before the yield, and the
-__exit__ method does everything after the yield. The yield itself represents where
-the code placed inside the `with` block will run.
+regular old function. Well, "regular" except that it uses `yield` and so is
+actually a generator function. The contextmanager decorator is able to take
+this generator function and turn it into a real context manager! With __enter__
+and __exit__ methods! The __enter__ method does everything before the yield,
+and the __exit__ method does everything after the yield. The yield itself
+represents where the code placed inside the `with` block will run.
 
 Right now, this context manager doesn't have any special exception handling, so
 if the code inside the `with` block throws an exception, we won't see the time
@@ -249,13 +252,13 @@ cause confusion.
             text = f.read()
         print(text)
 
-The first is a question of broard scope. And the question is: scope?? New Python
-programmers sometimes assume that the `with` block defines a new scope, and so
-`f` is only defined here. But `f` is actually defined *here*. In Python, the
-only things that define scopes are modules, class definitions, and function
-definitions. `with` blocks don't change anything; all these variables are
-available in the whole function. This is important because it allows us to do
-some neat things with the object returned by the context manager.
+The first aspect is: variable scope. Newer Python programmers sometimes assume
+that the `with` block defines a new scope, and so `f` is only defined here.
+But `f` is actually defined *here*. In Python, the only things that define
+scopes are modules, class definitions, and function definitions. `with` blocks
+don't change anything; all these variables are available in the whole function.
+This is important because it allows us to do some neat things with the object
+returned by the context manager.
 
     [timer.py]
     with Timer() as t:

@@ -38,3 +38,5 @@ def log_duration(operation_name):
 </code></pre>
 </figure>
 </details>
+
+<a href=../09-scope/>» Next Slide</a>
